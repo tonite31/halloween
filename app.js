@@ -15,8 +15,7 @@ global._path =
 	src : __dirname + "/src",
 	props : __dirname + "/properties",
 	log : __dirname + "/logs",
-	plugins : __dirname + "/plugins",
-	template : __dirname + "/template"
+	plugins : __dirname + "/plugins"
 };
 
 /**
@@ -46,7 +45,7 @@ var server = app.listen(_options.port, function()
 });
 
 var imp = require('imp');
-imp.setPattern(_path.template + "/{{name}}.html");
+imp.setPattern(_path.plugins + "/main/component/{{name}}/{{name}}.html");
 imp.setPattern(_path.plugins + "/{{prefix}}/component/{{name}}.html", "[a-z0-9\-\_]*");
 
 /**
