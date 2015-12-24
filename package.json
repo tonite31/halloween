@@ -1,0 +1,25 @@
+{
+  "name": "ximpl",
+  "version": "0.0.1",
+  "description": "A simple web application with express and imp on nodejs.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tonite31/ximpl.git"
+  },
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.3",
+    "method-override": "^2.3.5"
+  },
+  "keywords": [
+    "web application",
+    "imp",
+    "express",
+    "nodejs"
+  ],
+  "devDependencies": {},
+  "author": "Alprensia",
+  "homepage": "",
+  "license": "SEE LICENSE IN https://github.com/tonite31/ximpl/blob/master/LICENSE"
+}
