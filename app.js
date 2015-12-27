@@ -46,7 +46,7 @@ var server = app.listen(_options.port, function()
 
 var imp = require('imp');
 imp.setPattern(_path.plugins + "/main/component/{{name}}/{{name}}.html");
-imp.setPattern(_path.plugins + "/{{prefix}}/component/{{name}}.html", "[a-z0-9\-\_]*");
+imp.setPattern(_path.plugins + "/{{prefix}}/component/{{name}}/{{name}}.html", "[a-z0-9\-\_]*");
 
 /**
  * set static dirs
@@ -124,3 +124,6 @@ process.on('uncaughtException', function (err)
 	console.error(err.stack);
 	console.error("=================================================\n\n");
 });
+
+//모듈과 라우터 로딩해야한다. //모듈은 데이터바인드 할 때 require해서 쓰면 될거 같긴한데..
+//로컬파일 및 리모트 파일까지 생각해야한다.
