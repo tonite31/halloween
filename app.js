@@ -11,11 +11,8 @@ var methodOverride = require('method-override');
 global._path =
 {
 	home : __dirname,
-	content : __dirname + "/content",
-	src : __dirname + "/src",
-	props : __dirname + "/properties",
-	log : __dirname + "/logs",
-	plugins : __dirname + "/plugins"
+	plugins : __dirname + "/plugins",
+	libs : __dirname + "/libs"
 };
 
 /**
@@ -44,14 +41,13 @@ var server = app.listen(_options.port, function()
 	console.log('Listening on port %d', server.address().port);
 });
 
-var imp = require('imp');
+var imp = require('nodejs-imp');
 imp.setPattern(_path.plugins + "/main/component/{{name}}/{{name}}.html");
 imp.setPattern(_path.plugins + "/{{prefix}}/component/{{name}}/{{name}}.html", "[a-z0-9\-\_]*");
 
 /**
  * set static dirs
  */
-app.use('/content', express.static(_path.content));
 
 /**
  * set middleware
@@ -78,6 +74,9 @@ app.use(function(req, res, next)
 			}
 			else
 			{
+				//여기서 데이터바인딩을 하면 되겠다.
+				//html을 크리오로 읽어서 할건가?
+				
 				res.writeHead(200, {"Content-Type" : "text/html"});
 				res.end(html);
 			}
@@ -125,5 +124,24 @@ process.on('uncaughtException', function (err)
 	console.error("=================================================\n\n");
 });
 
-//모듈과 라우터 로딩해야한다. //모듈은 데이터바인드 할 때 require해서 쓰면 될거 같긴한데..
-//로컬파일 및 리모트 파일까지 생각해야한다.
+var routerLoader = require(_path.libs + "/RouterLoader");
+routerLoader.load(_path.plugins);
+
+var typeList = ['get', 'post', 'put', 'delete'];
+for(var i=0; i<typeList.length; i++)
+{
+	(function(type)
+	{
+		app[type]('/*', function(req, res, next)
+		{
+			if(routerLoader[type][req.path])
+			{
+				routerLoader[type][req.path](req, res, next);
+			}
+			else
+			{
+				res.status(404).end("Not Found");
+			}
+		});
+	})(typeList[i]);
+}
