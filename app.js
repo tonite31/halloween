@@ -11,7 +11,7 @@ var methodOverride = require('method-override');
 global._path =
 {
 	home : __dirname,
-	plugins : __dirname + "/plugins",
+	modules : __dirname + "/modules",
 	libs : __dirname + "/libs"
 };
 
@@ -42,12 +42,14 @@ var server = app.listen(_options.port, function()
 });
 
 var imp = require('nodejs-imp');
-imp.setPattern(_path.plugins + "/main/component/{{name}}/{{name}}.html");
-imp.setPattern(_path.plugins + "/{{prefix}}/component/{{name}}/{{name}}.html", "[a-z0-9\-\_]*");
+imp.setPattern(_path.modules + "/main/component/{{name}}/{{name}}.html");
+imp.setPattern(_path.modules + "/{{prefix}}/component/{{name}}/{{name}}.html", "[a-z0-9\-\_]*");
 
 /**
  * set static dirs
  */
+app.use('/ximpl', express.static(_path.libs + "/ximpl.js"));
+app.use('/modules', express.static(_path.modules));
 
 /**
  * set middleware
@@ -125,7 +127,7 @@ process.on('uncaughtException', function (err)
 });
 
 var routerLoader = require(_path.libs + "/RouterLoader");
-routerLoader.load(_path.plugins);
+routerLoader.load(_path.modules);
 
 var typeList = ['get', 'post', 'put', 'delete'];
 for(var i=0; i<typeList.length; i++)
