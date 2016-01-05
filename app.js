@@ -42,8 +42,11 @@ var server = app.listen(_options.port, function()
 });
 
 var imp = require('nodejs-imp');
-imp.setPattern(_path.modules + "/main/component/{{name}}/{{name}}.html");
-imp.setPattern(_path.modules + "/{{prefix}}/component/{{name}}/{{name}}.html", "[a-z0-9\-\_]*");
+imp.setPattern(_path.modules + "/main/fragment/{{name}}/{{name}}.html");
+imp.setPattern(_path.modules + "/{{prefix}}/fragment/{{name}}/{{name}}.html", "[a-z0-9\-\_]*");
+
+var Renderer = require(_path.libs + "/Renderer");
+Renderer.imp = imp;
 
 /**
  * set static dirs
@@ -56,48 +59,7 @@ app.use('/modules', express.static(_path.modules));
  */
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride());
-
-//imp 연동
-app.use(function(req, res, next)
-{
-	var domain = require("domain");
-	var reqDomain = domain.create();
-
-    reqDomain.add(req);
-    reqDomain.add(res);
-    
-    res.xrender = function(name, param)
-	{
-		imp.getHtml(name, param, function(err, html)
-		{
-			if(err)
-			{
-				res.status(500).send(err.stack);
-			}
-			else
-			{
-				//여기서 데이터바인딩을 하면 되겠다.
-				//html을 크리오로 읽어서 할건가?
-				
-				res.writeHead(200, {"Content-Type" : "text/html"});
-				res.end(html);
-			}
-		});
-	};
-
-    reqDomain.on('error', function (err)
-    {
-    	console.error("\n\n");
-    	console.error("=================================================");
-    	console.error("time : " + new Date().toString());
-    	console.error("name : DomainException");
-    	console.error("-------------------------------------------------");
-    	console.error(err.stack);
-    	console.error("=================================================\n\n");
-    });
-
-    reqDomain.run(next);
-});
+app.use(Renderer.initialize);
 
 /**
  * error handling

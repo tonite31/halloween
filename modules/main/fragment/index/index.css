@@ -1,0 +1,24 @@
+body
+{
+	padding: 70px;
+}
+
+.title
+{
+	font-size: 90px;
+	margin:0;
+}
+
+.table th, .table td
+{
+	padding: 10px;
+	font-size: 20px;
+	font-weight: 500;
+}
+
+.table th
+{
+	font-weight: normal;
+	font-size: 15px;
+	color: #666;
+}
