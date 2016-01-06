@@ -42,8 +42,8 @@ var server = app.listen(_options.port, function()
 });
 
 var imp = require('nodejs-imp');
-imp.setPattern(_path.modules + "/main/fragment/{{name}}/{{name}}.html");
-imp.setPattern(_path.modules + "/{{prefix}}/fragment/{{name}}/{{name}}.html", "[a-z0-9\-\_]*");
+imp.setPattern(_path.modules + "/main/views/template/{{name}}");
+imp.setPattern(_path.modules + "/{{prefix}}/views/template/{{name}}", "[a-z0-9\-\_]*");
 
 var Renderer = require(_path.libs + "/Renderer");
 Renderer.imp = imp;
@@ -51,7 +51,6 @@ Renderer.imp = imp;
 /**
  * set static dirs
  */
-app.use('/ximpl', express.static(_path.libs + "/ximpl.js"));
 app.use('/modules', express.static(_path.modules));
 
 /**
@@ -88,6 +87,8 @@ process.on('uncaughtException', function (err)
 	console.error("=================================================\n\n");
 });
 
+Renderer.importPlugins(_path.modules);
+
 var routerLoader = require(_path.libs + "/RouterLoader");
 routerLoader.load(_path.modules);
 
@@ -98,11 +99,23 @@ for(var i=0; i<typeList.length; i++)
 	{
 		app[type]('/*', function(req, res, next)
 		{
-			if(routerLoader[type][req.path])
+			var check = false;
+			var routerList = routerLoader[type];
+			if(routerList)
 			{
-				routerLoader[type][req.path](req, res, next);
+				for(var key in routerList)
+				{
+					var regx = new RegExp(key, "gi");
+					if(regx.exec(req.path))
+					{
+						routerLoader[type][key](req, res, next);
+						check = true;
+						break;
+					}
+				}
 			}
-			else
+			
+			if(!check)
 			{
 				res.status(404).end("Not Found");
 			}

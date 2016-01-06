@@ -1,29 +1,55 @@
+var fs = require('fs');
+
 var Renderer = {};
 
 (function()
 {
 	this.imp = null;
 	
+	this.plugins = [];
+	
+	this.importPlugins = function(dir)
+	{
+		var files = fs.readdirSync(dir);
+		
+		for(var i=0; i<files.length; i++)
+		{
+			if(fs.lstatSync(dir + '/' + files[i]).isDirectory())
+			{
+				this.importPlugins(dir + '/' + files[i]);
+			}
+			else
+			{
+				if(dir.lastIndexOf("renderer") != dir.length-8 || files[i].lastIndexOf(".js") == -1)
+					continue;
+				
+				this.plugins.push(require(dir + '/' + files[i]));
+			}	
+		}
+	};
+	
 	this.replacePath = function(html)
 	{
-		var matchList = html.match(/\@\{[a-zA-Z0-9\_\-\.\:]*\}/gi);
+		var matchList = html.match(/\@\{[a-zA-Z0-9\_\-\.\:\/]*\}/gi);
 		if(matchList)
 		{
 			for(var i=0; i<matchList.length; i++)
 			{
 				var split = matchList[i].replace("@{", "").replace("}", "").split(":");
 				
+				var prefix = "main";
+				var name = "";
 				if(split.length == 2)
 				{
-					var prefix = split[0];
-					var name = split[1];
-					html = html.replace(matchList[i], "/modules/" + prefix + "/fragment/" + name.split("\.")[0] + "/" + name);
+					prefix = split[0];
+					name = split[1];
 				}
 				else
 				{
-					var name = split[0];
-					html = html.replace(matchList[i], "/modules/main/fragment/" + name.split("\.")[0] + "/" + name);
+					name = split[0];
 				}
+				
+				html = html.replace(matchList[i], "/modules/" + prefix + "/views/" + name);
 			}
 		}
 		
@@ -55,10 +81,13 @@ var Renderer = {};
 					}
 					else
 					{
-						//여기서 데이터바인딩을 하면 되겠다.
-						//html을 크리오로 읽어서 할건가?
+						for(var i=0; i<Renderer.plugins.length; i++)
+							html = Renderer.plugins[i](html);
 						
 						html = Renderer.replacePath(html);
+						
+						//여기서 데이터바인딩을 하면 되겠다.
+						//html을 크리오로 읽어서 할건가?
 						
 						res.writeHead(200, {"Content-Type" : "text/html"});
 						res.end(html);

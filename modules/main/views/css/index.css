@@ -22,3 +22,21 @@ body
 	font-size: 15px;
 	color: #666;
 }
+
+.menu li
+{
+	list-style: none;
+	float: left;
+	padding: 10px;
+	
+	font-size: 20px;
+	
+	font-weight: 600;
+	
+	color: #ccc;
+}
+
+.menu li:HOVER
+{
+	color: #000;
+}
