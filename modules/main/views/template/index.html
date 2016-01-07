@@ -11,13 +11,45 @@
 <link rel="stylesheet" type="text/css" href="@{css/index.css}" />
 
 <title>Title</title>
+
+<script type="text/comp" id="TextBox">
+<span style="font-size: 20px; border: 1px solid #ccc; padding: 5px;">This is TextBox. {{tick}}</span>
+</script>
+
+<script type="text/javascript">
+	
+	var t = {};
+	t.data = {tick : 0};
+	
+
+	var TextBox = document.getElementById("TextBox").innerHTML;
+	window.addEventListener("load", function()
+	{
+		var fragment = document.createDocumentFragment();
+		var children = document.body.children;
+		while(children.length > 0)
+		{
+			fragment.appendChild(children[0]);
+		}
+		
+		var box = fragment.querySelector("TextBox");
+		
+		var div = document.createElement("div");
+		div.innerHTML = TextBox;
+		
+		var target = div.children[0];
+		box.parentElement.replaceChild(target, box);
+		
+		console.dir(fragment);
+		
+		document.body.appendChild(fragment);
+	});
+</script>
 </head>
 
 <body>
-	<div id="example">
-		<h3>ㅎㅎㅎ</h3>
-		
-		<div id="ttt"></div>
+	<div>
+		<TextBox></TextBox>
 	</div>
 	<header>
 		<h1 class="title">Title</h1>
@@ -29,7 +61,7 @@
 			</ul>
 		</div>
 	</header>
-	${#{1}.html}
+	${#{1}}
 </body>
 
 </html>

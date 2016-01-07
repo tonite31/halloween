@@ -42,8 +42,8 @@ var server = app.listen(_options.port, function()
 });
 
 var imp = require('nodejs-imp');
-imp.setPattern(_path.modules + "/main/views/template/{{name}}");
-imp.setPattern(_path.modules + "/{{prefix}}/views/template/{{name}}", "[a-z0-9\-\_]*");
+imp.setPattern(_path.modules + "/main/views/template/{{name}}.html");
+imp.setPattern(_path.modules + "/{{prefix}}/views/template/{{name}}.html", "[a-z0-9\-\_]*");
 
 var Renderer = require(_path.libs + "/Renderer");
 Renderer.imp = imp;
