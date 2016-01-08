@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE"/>
 
+<script type="text/javascript" src="@{libs/mediate.js}"></script>
 <script type="text/javascript" src="@{libs/ximpl.js}"></script>
 
 
@@ -12,56 +13,63 @@
 
 <title>Title</title>
 
-<script type="text/comp" id="TextBox">
-<span style="font-size: 20px; border: 1px solid #ccc; padding: 5px;">This is TextBox. {{tick}}</span>
+<script type="text" id="TextBox">
+<span style="font-size: 20px; border: 1px solid #ccc; margin-top: 50px; display: inline-block; padding: 5px;">This is TextBox. {{tick}}</span>
+</script>
+
+<script type="text" id="Box">
+<div>
+	{{test}}
+	<div>
+		<button type="button">Click here!</button>
+		<span>결과 : {{result}} 이런경우 <div></div></span>
+	</div>
+	<TextBox id="myTextBox"></TextBox>
+</div>
 </script>
 
 <script type="text/javascript">
-	
-	var t = {};
-	t.data = {tick : 0};
-	
-
-	var TextBox = document.getElementById("TextBox").innerHTML;
-	window.addEventListener("load", function()
+var TextBox = mediate.create("TextBox", document.getElementById("TextBox").innerHTML);
+TextBox.data = {tick : 0};
+TextBox.bindEvent(null, "mouseover", function()
+{
+	this.update(function()
 	{
-		var fragment = document.createDocumentFragment();
-		var children = document.body.children;
-		while(children.length > 0)
-		{
-			fragment.appendChild(children[0]);
-		}
-		
-		var box = fragment.querySelector("TextBox");
-		
-		var div = document.createElement("div");
-		div.innerHTML = TextBox;
-		
-		var target = div.children[0];
-		box.parentElement.replaceChild(target, box);
-		
-		console.dir(fragment);
-		
-		document.body.appendChild(fragment);
+		this.data.tick = "mouseover";
 	});
+});
+
+TextBox.bindEvent(null, "mouseleave", function()
+{
+	this.update(function()
+	{
+		this.data.tick = "mouseleave";
+	});
+});
+
+var Box = mediate.create("Box", document.getElementById("Box").innerHTML);
+Box.data = {test : "테스트", result : "현재시간"};
+Box.bindEvent("button", "click", function()
+{
+	this.update(function()
+	{
+		this.data.result = new Date().getTime();
+		
+		var textbox = document.getElementById("myTextBox");
+		textbox.mediate.update(function()
+		{
+			this.data.tick = "오우예";	
+		});
+	});	
+});
 </script>
 </head>
 
 <body>
 	<div>
-		<TextBox></TextBox>
+		<Box id="asdfbb" class="box" data-test="하하하"></Box>
 	</div>
-	<header>
-		<h1 class="title">Title</h1>
-		<div>
-			<ul class="menu">
-				<li><a>menu1</a></li>
-				<li><a>menu1</a></li>
-				<li><a>menu1</a></li>
-			</ul>
-		</div>
-	</header>
-	${#{1}}
+	<h1><Box id="asdfbb" class="box" data-test="하하하"></Box></h1>
 </body>
 
 </html>
