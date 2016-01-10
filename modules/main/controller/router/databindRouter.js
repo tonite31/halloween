@@ -2,8 +2,13 @@ module.exports = function()
 {
 	this.bind('post', '/databind/[a-zA-Z]', function (req, res)
 	{
-		console.log("파람 : ", req.body);
+		var moduleName = req.path.replace("/databind/", "");
 		
-		res.end("");
+		var list = [];
+		list.push({text : "abc"});
+		list.push({text : "abc"});
+		list.push({text : "abc"});
+		
+		res.end(JSON.stringify(list));
 	});
 };

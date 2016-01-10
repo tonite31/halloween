@@ -52,10 +52,6 @@ var glim = {};
 				{
 					nodeList.push(node);
 				}
-				
-				//데이터와 속성은 다른것이긴 한데 일단 함께 변화를 주는 쪽으로 간다.
-				if(this.element.attributes.hasOwnProperty(key))
-					this.element.setAttribute(key, this.data[key]);
 			}
 		}
 		
@@ -164,13 +160,21 @@ var glim = {};
 			}
 		}
 		
-		target.parentElement.replaceChild(component.element, target);
 		component.bindData();
 		
 		if(this.life.onLoad)
-			this.life.onLoad.call(component);
-		
-		glim.compile(component.element);
+		{
+			this.life.onLoad.call(component, function()
+			{
+				target.parentElement.replaceChild(component.element, target);
+				glim.compile(component.element);
+			});
+		}
+		else
+		{
+			target.parentElement.replaceChild(component.element, target);
+			glim.compile(component.element);
+		}
 	};
 	
 	/**
