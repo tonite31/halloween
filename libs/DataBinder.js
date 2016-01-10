@@ -1,6 +1,6 @@
 var fs = require('fs');
 var Handlebars = require("handlebars");
-var HandlebarHelper = require(_path.content + "/module/imboard/js/handlebars-helper.js");
+var HandlebarHelper = require(_path.libs + "/handlebars-helper.js");
 
 var DataBinder = function()
 {
@@ -9,26 +9,27 @@ var DataBinder = function()
 
 	this.modules = {};
 
-	this.loadCustomHelper();
+//커스텀 헬퍼는 어디에 놓고 어떻게 읽을것인지 생각해봐야함.
+//	this.loadCustomHelper();
 };
 
-DataBinder.prototype.loadCustomHelper = function()
-{
-	var path = _path.content + "/frame/" + _config.frame + "/properties/handlebars/";
-
-	try
-	{
-		var result = fs.readdirSync(path);
-		for(var i=0; i<result.length; i++)
-		{
-			require(path + result[i]);
-		}
-	}
-	catch(err)
-	{
+//DataBinder.prototype.loadCustomHelper = function()
+//{
+//	var path = _path.content + "/frame/" + _config.frame + "/properties/handlebars/";
+//
+//	try
+//	{
+//		var result = fs.readdirSync(path);
+//		for(var i=0; i<result.length; i++)
+//		{
+//			require(path + result[i]);
+//		}
+//	}
+//	catch(err)
+//	{
 //		_log.error(err.stack);
-	}
-};
+//	}
+//};
 
 DataBinder.prototype.databind = function($, el, req, callback)
 {
@@ -210,6 +211,30 @@ DataBinder.prototype.compile = function($, list, req, callback)
 DataBinder.prototype.addModule = function(key, f)
 {
 	this.modules[key] = f;
+};
+
+DataBinder.prototype.load = function(dir)
+{
+	var files = fs.readdirSync(dir);
+	
+	for(var i=0; i<files.length; i++)
+	{
+		if(fs.lstatSync(dir + '/' + files[i]).isDirectory())
+		{
+			this.load(dir + '/' + files[i]);
+		}
+		else
+		{
+			if(dir.lastIndexOf("databind") != dir.length-8 || files[i].lastIndexOf(".js") == -1)
+				continue;
+			
+			var module = require(dir + '/' + files[i]);
+			for(var key in module)
+			{
+				this.addModule(key, module[key]);
+			}
+		}	
+	}
 };
 
 DataBinder.instance = null;

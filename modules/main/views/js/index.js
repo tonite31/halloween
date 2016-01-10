@@ -1,4 +1,6 @@
-ximpl.compile("test", function($)
+$.pageReady(function()
 {
-	console.log("디스 : ", this);
+	console.log("페이지 로딩 완료");
+	
+	var element = $.get("#asdfbb");
 });

@@ -57,6 +57,7 @@ app.use('/modules', express.static(_path.modules));
  * set middleware
  */
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(Renderer.initialize);
 
@@ -88,6 +89,9 @@ process.on('uncaughtException', function (err)
 });
 
 Renderer.importPlugins(_path.modules);
+
+var DataBinder = require(_path.libs + "/DataBinder");
+DataBinder.load(_path.modules);
 
 var routerLoader = require(_path.libs + "/RouterLoader");
 routerLoader.load(_path.modules);

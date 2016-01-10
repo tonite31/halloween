@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE"/>
 
-<script type="text/javascript" src="@{libs/mediate.js}"></script>
+<script type="text/javascript" src="@{libs/glim.js}"></script>
 <script type="text/javascript" src="@{libs/ximpl.js}"></script>
 
 
@@ -25,43 +25,41 @@
 		<span>결과 : {{result}} 이런경우 <div></div></span>
 	</div>
 	<TextBox id="myTextBox"></TextBox>
+	<TextBox id="yourTextBox"></TextBox>
 </div>
 </script>
 
+<script type="text" id="TextList">
+<ul data-bind="textList" data-param='{"data" : "ggg"}'>
+{{#if textList}}
+{{#each textList}}
+<li>{{text}]</li>
+{{/each}}
+{{/if}}
+</ul>
+</script>
+
 <script type="text/javascript">
-var TextBox = mediate.create("TextBox", document.getElementById("TextBox").innerHTML);
+var TextBox = glim.create("TextBox", document.getElementById("TextBox").innerHTML);
 TextBox.data = {tick : 0};
-TextBox.bindEvent(null, "mouseover", function()
-{
-	this.update(function()
-	{
-		this.data.tick = "mouseover";
-	});
-});
 
-TextBox.bindEvent(null, "mouseleave", function()
-{
-	this.update(function()
-	{
-		this.data.tick = "mouseleave";
-	});
-});
-
-var Box = mediate.create("Box", document.getElementById("Box").innerHTML);
+var Box = glim.create("Box", document.getElementById("Box").innerHTML);
 Box.data = {test : "테스트", result : "현재시간"};
-Box.bindEvent("button", "click", function()
+
+var TextList = glim.create("TextList", document.getElementById("TextList").innerHTML);
+TextList.life.onLoad = function()
 {
-	this.update(function()
-	{
-		this.data.result = new Date().getTime();
-		
-		var textbox = document.getElementById("myTextBox");
-		textbox.mediate.update(function()
-		{
-			this.data.tick = "오우예";	
-		});
-	});	
-});
+	var moduleName = this.element.getAttribute("data-bind");
+	var param = this.element.getAttribute("data-param");
+	
+	param = JSON.parse(param);
+	
+	console.log(moduleName, param);
+	
+	$.request({type : "post", url : "/databind/test", data : {"test" : "abc"}, success : function(result){
+		console.log("g : ", result);
+	}});
+};
 </script>
 </head>
 
@@ -69,7 +67,15 @@ Box.bindEvent("button", "click", function()
 	<div>
 		<Box id="asdfbb" class="box" data-test="하하하"></Box>
 	</div>
-	<h1><Box id="asdfbb" class="box" data-test="하하하"></Box></h1>
+	<TextList></TextList>
+	
+	<ul data-bind="textList" data-param='{"data" : "ggg"}'>
+	{{#if textList}}
+	{{#each textList}}
+	<li>{{text}}</li>
+	{{/each}}
+	{{/if}}
+	</ul>
 </body>
 
 </html>

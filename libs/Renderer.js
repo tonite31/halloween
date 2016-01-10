@@ -1,4 +1,6 @@
 var fs = require('fs');
+var cheerio = require('cheerio');
+var DataBinder = require(_path.libs + "/DataBinder");
 
 var Renderer = {};
 
@@ -89,8 +91,13 @@ var Renderer = {};
 						//여기서 데이터바인딩을 하면 되겠다.
 						//html을 크리오로 읽어서 할건가?
 						
-						res.writeHead(200, {"Content-Type" : "text/html"});
-						res.end(html);
+						$ = cheerio.load(html);
+						
+						DataBinder.databind($, $("body"), req, function(html)
+						{
+							res.writeHead(200, {"Content-Type" : "text/html"});
+							res.end(html);
+						});
 					}
 				});
 			};
