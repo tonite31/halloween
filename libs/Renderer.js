@@ -88,9 +88,6 @@ var Renderer = {};
 						
 						html = Renderer.replacePath(html);
 						
-						//여기서 데이터바인딩을 하면 되겠다.
-						//html을 크리오로 읽어서 할건가?
-						
 						$ = cheerio.load(html);
 						
 						DataBinder.databind($, $("body"), req, function(html)
