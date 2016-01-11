@@ -13,6 +13,6 @@ module.exports = function()
 		if(!param[1])
 			param[1] = "summary";
 		
-		res.xrender("index", param);
+		res.render("index", param);
 	});
 };

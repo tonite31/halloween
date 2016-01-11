@@ -73,7 +73,7 @@ var Renderer = {};
 
 	    if(Renderer.imp)
 	    {
-	    	res.xrender = function(name, param)
+	    	res.render = function(name, param)
 			{
 	    		Renderer.imp.getHtml(name, param, function(err, html)
 				{
