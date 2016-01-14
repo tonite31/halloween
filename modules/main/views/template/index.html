@@ -4,83 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE"/>
 
-<script type="text/javascript" src="@{libs/glim.js}"></script>
-<script type="text/javascript" src="@{libs/ximpl.js}"></script>
-<script type="text/javascript" src="@{libs/handlebars-v4.0.5.js}"></script>
-
 <script type="text/javascript" src="@{js/index.js}"></script>
 <link rel="stylesheet" type="text/css" href="@{css/index.css}" />
 
 <title>Title</title>
 
-<script type="text" id="TextBox">
-<span style="font-size: 20px; border: 1px solid #ccc; margin-top: 50px; display: inline-block; padding: 5px;">This is TextBox. {{tick}}</span>
-</script>
-
-<script type="text" id="Box">
-<div>
-	{{test}}
-	<div>
-		<button type="button">Click here!</button>
-		<span>결과 : {{result}} 이런경우 <div></div></span>
-	</div>
-	<TextBox id="myTextBox"></TextBox>
-	<TextBox id="yourTextBox"></TextBox>
-</div>
-</script>
-
-<script type="text" id="TextList">
-<ul data-bind="textList" data-param='{"data" : "ggg"}'>
-{{#if textList}}
-{{#each textList}}
-<li>{{text}}</li>
-{{/each}}
-{{/if}}
-</ul>
-</script>
-
-<script type="text/javascript">
-var TextBox = glim.create("TextBox", document.getElementById("TextBox").innerHTML);
-TextBox.data = {tick : 0};
-
-var Box = glim.create("Box", document.getElementById("Box").innerHTML);
-Box.data = {test : "테스트", result : "현재시간"};
-
-var TextList = glim.create("TextList", document.getElementById("TextList").innerHTML);
-TextList.life.onLoad = function(next)
-{
-	var moduleName = this.element.getAttribute("data-bind");
-	var param = this.element.getAttribute("data-param");
-	
-	param = JSON.parse(param);
-	
-	var template = this.element.innerHTML;
-	template = Handlebars.compile(template);
-	
-	var that = this;
-	$.request({type : "post", url : "/databind/textList", data : {"test" : "abc"}, success : function(result){
-		
-		var data = JSON.parse(result.result);
-		that.element.innerHTML = template({textList : data});
-		next();
-	}});
-};
-</script>
 </head>
 
 <body>
-	<div>
-		<Box id="asdfbb" class="box" data-test="하하하"></Box>
-	</div>
-	<TextList></TextList>
-	
-	<ul data-bind="textList" data-param='{"data" : "ggg"}'>
-	{{#if textList}}
-	{{#each textList}}
-	<li>{{text}}</li>
-	{{/each}}
-	{{/if}}
-	</ul>
 </body>
 
 </html>
