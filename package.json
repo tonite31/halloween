@@ -10,7 +10,8 @@
   "dependencies": {
     "body-parser": "^1.14.2",
     "express": "^4.13.3",
-    "method-override": "^2.3.5"
+    "method-override": "^2.3.5",
+    "nodejs-imp": "^0.0.1"
   },
   "keywords": [
     "web application",
