@@ -46,7 +46,7 @@ imp.setPattern(_path.modules + "/main/views/template/{{name}}.html");
 imp.setPattern(_path.modules + "/{{prefix}}/views/template/{{name}}.html", "[a-z0-9\-\_]*");
 
 var Renderer = require(_path.libs + "/Renderer");
-Renderer.imp = imp;
+imp.addRenderModule(Renderer.replacePath);
 
 /**
  * set static dirs
@@ -59,7 +59,7 @@ app.use('/modules', express.static(_path.modules));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(methodOverride());
-app.use(Renderer.initialize);
+app.use(imp.render);
 
 /**
  * error handling
@@ -88,10 +88,10 @@ process.on('uncaughtException', function (err)
 	console.error("=================================================\n\n");
 });
 
-Renderer.importPlugins(_path.modules);
+var bindModuleLoader = require(_path.libs + "/BindModuleLoader");
+bindModuleLoader.load(_path.modules);
 
-var DataBinder = require(_path.libs + "/DataBinder");
-DataBinder.load(_path.modules);
+imp.setBinderModules(bindModuleLoader.modules);
 
 var routerLoader = require(_path.libs + "/RouterLoader");
 routerLoader.load(_path.modules);
