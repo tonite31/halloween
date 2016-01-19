@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE"/>
 
+<script type="text/javascript" src="@{libs/hallo.js}"></script>
 <script type="text/javascript" src="@{js/index.js}"></script>
 <link rel="stylesheet" type="text/css" href="@{css/index.css}" />
 
@@ -12,6 +13,34 @@
 </head>
 
 <body>
+<script id="test" type="text/template">
+{{#if testList}}
+{{#each testList}}
+<a>{{value}}</a>
+{{/each}}
+{{/if}}
+<div data-bind="test" data-param='{"test2" : "abc2"}' data-template="#test2"></div>
+</script>
+
+</head>
+
+<body>
+	<script id="test2" type="text/template">
+{{#if testList}}
+{{#each testList}}
+	<p>{{value}}</p>
+{{/each}}
+{{/if}}
+</script>
+	{{#if test}}
+	<p>Yaho</p>
+	{{else}}
+	<p>Go out!</p>
+	{{/if}}
+	<div data-bind="textList" data-param='{"test" : "abc"}' data-template="#test"></div>
+	<div data-bind="test" data-param='{"test" : "abc"}' data-template="#test"></div>
+	
+	얍 : #{1}, #{2}, #{3}
 </body>
 
 </html>

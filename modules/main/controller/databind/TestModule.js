@@ -1,14 +1,11 @@
-module.exports.textList = function($, el, param, req, next)
+module.exports.textList = function(param, done)
 {
-	var that = this;
-	
-	var template = this.getTemplate($, el);
-	
-	var list = [];
-	list.push({text : "abc"});
-	list.push({text : "abc"});
-	list.push({text : "abc"});
-	
-	$(el).html(template({textList : list}));
-	next();
+	var testList = [{value : '1'}, {value : '2'}, {value : '3'}, {value : '4'}, {value : '5'}];
+	done({testList : testList});
 };
+
+module.exports.textList2 = function(param, done)
+{
+	var testList = [{value : '1'}, {value : '2'}, {value : '3'}, {value : '4'}, {value : '5'}];
+	done({testList : testList});
+}
