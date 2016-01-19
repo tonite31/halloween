@@ -8,10 +8,10 @@
   },
   "main": "app.js",
   "dependencies": {
-    "body-parser": "^1.14.2",
-    "express": "^4.13.3",
-    "method-override": "^2.3.5",
-    "nodejs-imp": "^0.0.1"
+    "body-parser": "*",
+    "express": "*",
+    "method-override": "*",
+    "nodejs-imp": "*"
   },
   "keywords": [
     "web application",
