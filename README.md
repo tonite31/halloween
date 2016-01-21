@@ -121,7 +121,7 @@ module.exports.urlParam = function(param, done) // This param is in "data-param"
 };
 ```
 
-### Run on browser.js
+### Run on browser
 ```
 http://localhost:3000/list1/list2
 ```
