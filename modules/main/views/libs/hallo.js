@@ -52,9 +52,15 @@ $.request = function(data)
 	    if (xmlhttp.readyState == XMLHttpRequest.DONE)
 	    {
 	        if(xmlhttp.status == 200){
-	        	data.success({code : 200, result : xmlhttp.responseText});
+	        	if(data.success)
+	        		data.success({code : 200, result : xmlhttp.responseText});
+	        	else
+	        		console.log({code : 200, result : xmlhttp.responseText});
 	        }else{
-	        	data.error({code : xmlhttp.status, result : xmlhttp.statusText});
+	        	if(data.error)
+	        		data.error({code : xmlhttp.status, result : xmlhttp.statusText});
+	        	else
+	        		console.error({code : xmlhttp.status, result : xmlhttp.statusText});
 	        }
 	    }
 	}
