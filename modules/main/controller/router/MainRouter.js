@@ -1,5 +1,6 @@
 module.exports = function()
 {
+	//You can use regexp at path.
 	this.bind('get', '/[a-zA-Z0-9]*', function (req, res)
 	{
 		var split = req.path.split("/");
@@ -10,8 +11,7 @@ module.exports = function()
 			param[i] = split[i];
 		}
 		
-		if(!param[1])
-			param[1] = "summary";
+		param.name = "Alprensia";
 		
 		res.render("index", param);
 	});

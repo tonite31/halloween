@@ -17,7 +17,7 @@ var fs = require('fs');
 			}
 			else
 			{
-				if(dir.lastIndexOf("databind") != dir.length-8 || files[i].lastIndexOf(".js") == -1)
+				if(dir.lastIndexOf("binder") != dir.length-6 || files[i].lastIndexOf(".js") == -1)
 					continue;
 				
 				var module = require(dir + '/' + files[i]);
