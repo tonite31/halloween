@@ -57,9 +57,6 @@ Structure of example projects.
 
 <title>Title</title>
 
-</head>
-
-<body>
 <script id="urlParam" type="text/template">
 {{#if list}}
 {{#each list}}
@@ -87,10 +84,10 @@ Structure of example projects.
 ### MainRouter.js
 This router render index.html
 ```javascript
-module.exports = function()
+module.exports = function(app)
 {
 	//You can use regexp at path.
-	this.bind('get', '/[a-zA-Z0-9]*', function (req, res)
+	app.get('/*', function (req, res)
 	{
 		var split = req.path.split("/");
 		
