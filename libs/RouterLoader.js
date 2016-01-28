@@ -2,13 +2,7 @@ var fs = require('fs');
 
 (function()
 {
-	var loader = {get : {}, post : {}, put : {}, delete : {}};
-	loader.bind = function(type, path, callback)
-	{
-		loader[type][path] = callback;
-	};
-	
-	loader.load = function(dir)
+	var loader = function(dir)
 	{
 		var files = fs.readdirSync(dir);
 		
@@ -16,7 +10,7 @@ var fs = require('fs');
 		{
 			if(fs.lstatSync(dir + '/' + files[i]).isDirectory())
 			{
-				loader.load(dir + '/' + files[i]);
+				loader(dir + '/' + files[i]);
 			}
 			else
 			{
@@ -24,7 +18,7 @@ var fs = require('fs');
 					continue;
 				
 				var router = require(dir + '/' + files[i]);
-				router.call(loader);
+				router(_app);
 			}	
 		}
 	};

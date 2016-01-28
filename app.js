@@ -35,7 +35,7 @@ process.argv.forEach(function (val, index, array)
 /**
  * create express and imp
  */
-var app = express();
+var app = global._app = express();
 var server = app.listen(_options.port, function()
 {
 	console.log('Listening on port %d', server.address().port);
@@ -94,35 +94,35 @@ BinderLoader.load(_path.modules);
 imp.setBinderModules(BinderLoader.modules);
 
 var routerLoader = require(_path.libs + "/RouterLoader");
-routerLoader.load(_path.modules);
+routerLoader(_path.modules);
 
-var typeList = ['get', 'post', 'put', 'delete'];
-for(var i=0; i<typeList.length; i++)
-{
-	(function(type)
-	{
-		app[type]('/*', function(req, res, next)
-		{
-			var check = false;
-			var routerList = routerLoader[type];
-			if(routerList)
-			{
-				for(var key in routerList)
-				{
-					var regx = new RegExp(key, "gi");
-					if(regx.exec(req.path))
-					{
-						routerLoader[type][key](req, res, next);
-						check = true;
-						break;
-					}
-				}
-			}
-			
-			if(!check)
-			{
-				res.status(404).end("Not Found");
-			}
-		});
-	})(typeList[i]);
-}
+//var typeList = ['get', 'post', 'put', 'delete'];
+//for(var i=0; i<typeList.length; i++)
+//{
+//	(function(type)
+//	{
+//		app[type]('/*', function(req, res, next)
+//		{
+//			var check = false;
+//			var routerList = routerLoader[type];
+//			if(routerList)
+//			{
+//				for(var key in routerList)
+//				{
+//					var regx = new RegExp(key, "gi");
+//					if(regx.exec(req.path))
+//					{
+//						routerLoader[type][key](req, res, next);
+//						check = true;
+//						break;
+//					}
+//				}
+//			}
+//			
+//			if(!check)
+//			{
+//				res.status(404).end("Not Found");
+//			}
+//		});
+//	})(typeList[i]);
+//}
