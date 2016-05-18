@@ -51,7 +51,7 @@ imp.addRenderModule(Renderer.replacePath);
 /**
  * set static dirs
  */
-app.use('/view', express.static(_path.views));
+app.use('/views', express.static(_path.views));
 
 /**
  * set middleware

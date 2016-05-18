@@ -23,7 +23,7 @@ var Renderer = {};
 					name = split[0];
 				}
 				
-				html = html.replace(matchList[i], "/modules/" + prefix + "/views/" + name);
+				html = html.replace(matchList[i], "/views/" + name);
 			}
 		}
 		
