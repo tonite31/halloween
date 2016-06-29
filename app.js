@@ -43,7 +43,7 @@ var server = app.listen(_options.port, function()
 });
 
 var imp = require('nodejs-imp');
-imp.setPattern(_path.home + '/views/template/{{name}}.html');
+imp.setPattern(_path.home + '/views/html/{{name}}.html');
 
 var Renderer = require(_path.libs + '/Renderer');
 imp.addRenderModule(Renderer.replacePath);
