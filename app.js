@@ -88,10 +88,10 @@ process.on('uncaughtException', function (err)
 	console.error('=================================================\n\n');
 });
 
-var BinderLoader = require(_path.libs + '/BinderLoader');
-BinderLoader.load(_path.controller);
+app.get('/', function(req, res, next)
+{
+	res.render('index');
+});
 
-imp.setBinderModules(BinderLoader.modules);
-
-var routerLoader = require(_path.libs + '/RouterLoader');
-routerLoader(_path.controller);
+var moduleLoader = require(_path.libs + '/ModuleLoader');
+moduleLoader(app);
