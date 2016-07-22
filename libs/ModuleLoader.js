@@ -6,7 +6,7 @@ module.exports = function(app)
 	var routing = function(type, req, res, next)
 	{
 		var path = req.path.substring(1);
-		if(path.match(/[a-z0-9\/\.]*/gi))
+		if(path.match(/[a-z0-9\/]*/gi))
 		{
 			var split = path.split('/');
 			try
