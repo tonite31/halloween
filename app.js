@@ -88,10 +88,5 @@ process.on('uncaughtException', function (err)
 	console.error('=================================================\n\n');
 });
 
-app.get('/', function(req, res, next)
-{
-	res.render('index');
-});
-
-var moduleLoader = require(_path.libs + '/ModuleLoader');
-moduleLoader(app);
+var routerLoader = require(_path.libs + '/RouterLoader');
+routerLoader(_path.controller + '/routers');

@@ -14,7 +14,7 @@ var fs = require('fs');
 			}
 			else
 			{
-				if(dir.lastIndexOf("router") != dir.length-6 || files[i].lastIndexOf(".js") == -1)
+				if(dir.lastIndexOf("routers") != dir.length-7 || files[i].lastIndexOf(".js") == -1)
 					continue;
 				
 				var router = require(dir + '/' + files[i]);
