@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="/App/css/App.css">
+<link rel="stylesheet" href="/App/css/Common.css">
+
+${Head}
+
+
+<script src="/App/js/App.js"></script>
+
+<title>{{ App.title }}</title>
+</head>
+
+<body>
+    <div id="LoginView" class="LoginView">
+        ${LoginView}
+        <iframe class="LoginViewFrame"></iframe>
+    </div>
+    <div class="App">
+        <header class="Header">${Header}</header>
+        <section class="AppView">@{Views}</section>
+        <footer class="Footer">${footer}</footer>
+    </div>
+</body>
+
+</html>

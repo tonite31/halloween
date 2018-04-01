@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        @keyframes rotating
+        {
+            from {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            to {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <script>
+        if(window.parent.login)
+        {
+            window.parent.login.call(window.parent.App);
+        }
+    </script>
+</head>
+<body>
+<div style="display: flex; justify-content: center; align-items: center; position: fixed; left: 0; right: 0; top: 0; bottom: 0;">
+    <span class="glyphicon glyphicon-repeat" style="font-size: 60px; animation: rotating 2s linear infinite;"></span>
+</div>
+</body>
+</html>

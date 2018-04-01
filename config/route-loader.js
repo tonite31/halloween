@@ -1,19 +1,21 @@
 var fs = require('fs');
 module.exports = function(app)
 {
-    fs.readdir('./src/routes', function(err, list)
+    var list = fs.readdirSync('./src/middlewares');
+    for(var i=0; i<list.length; i++)
     {
-        if(err)
+        if(list[i].endsWith('.js'))
         {
-            return console.error(err);
+            require(_path.home + '/src/middlewares/' + list[i])(app);
         }
-    
-        for(var i=0; i<list.length; i++)
+    }
+
+    list = fs.readdirSync('./src/routes');
+    for(var i=0; i<list.length; i++)
+    {
+        if(list[i].endsWith('.js'))
         {
-            if(list[i].endsWith('.js'))
-            {
-                require(_path.home + '/src/routes/' + list[i])(app);
-            }
+            require(_path.home + '/src/routes/' + list[i])(app);
         }
-    });
+    }
 };

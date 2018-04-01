@@ -4,15 +4,13 @@ var methodOverride = require('method-override');
 var session = require('express-session');
 var helmet = require('helmet');
 
-var fs = require('fs');
-
 var favicon = require('serve-favicon');
 
 global._path =
 {
     home : __dirname,
     src : __dirname + '/src',
-    public : __dirname + '/public',
+    App : __dirname + '/App',
     libs : __dirname + '/libs'
 };
 
@@ -37,7 +35,7 @@ require('./config/mongoose.js')(function()
     require('./config/view-engine.js')(app);
     require('./config/error-handler.js')(app);
     require('./config/model-loader.js');
-    require('./config/route-loader.js');
+    require('./config/route-loader.js')(app);
 
-    app.use('/', express.static('./public'));
+    app.use('/App', express.static('./App'));
 });

@@ -1,4 +1,4 @@
-var config = require('./local-config.json');
+var config = require('../local-env.json');
 
 module.exports = function(callback)
 {
