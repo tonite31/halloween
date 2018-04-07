@@ -1,16 +1,20 @@
-var config = require('../local-env.json');
+const chalk = require('chalk');
+const config = require('../local-env.json');
 
 module.exports = function(callback)
 {
-    var mongoose = global.mongoose = require('mongoose');
+    const uri = process.env.MONGODB_URI || config.MONGODB_URI;
+    const mongoose = global.mongoose = require('mongoose');
     mongoose.Promise = require('bluebird');
-    var db = mongoose.connection;
+    const db = mongoose.connection;
     db.on('error', console.error);
     db.once('open', function()
     {
-        console.log("Connected to mongod server");
+        console.log(chalk.green('[Connected to mongod server]'));
+        console.log(chalk.blue(uri));
+        console.log();
         callback();
     });
-    
-    mongoose.connect(process.env.MONGODB_URI || config.MONGODB_URI);
+
+    mongoose.connect(uri);
 };

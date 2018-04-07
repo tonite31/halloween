@@ -4,7 +4,7 @@ module.exports =
     [
         {
             name: "halloween",
-            script: "./server.js",
+            script: "./server.Components",
             env:
             {
                 "PORT": 3000,

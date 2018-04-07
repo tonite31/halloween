@@ -6,8 +6,6 @@
         {
             window.App.init();
         });
-
-        this.data = {};
     };
 
     App.prototype.init = function()
@@ -21,29 +19,20 @@
 
     App.prototype.checkLogin = function(callback)
     {
-        var that = this;
-        $.ajax('/api/profile/me').done(function(result)
+        var isLogin = true;
+        if(isLogin)
         {
-            that.data.user = result;
-
             callback();
-
-        }).fail(function(err)
+        }
+        else
         {
-            if(err.status == 401)
+            window.login = function()
             {
-                window.login = function()
-                {
-                    this.init();
-                };
+                this.init();
+            }.bind(this);
 
-                LoginView.init();
-            }
-            else
-            {
-                console.error(err);
-            }
-        });
+            LoginView.init();
+        }
     };
 
     window.App = new App();

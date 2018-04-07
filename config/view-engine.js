@@ -26,13 +26,13 @@ module.exports = function(app)
                 }
             }
 
-            var list = fs.readdirSync('./App/views');
+            var list = fs.readdirSync('./App/Views');
             if(list)
             {
                 var html = '';
                 for(var i=0; i<list.length; i++)
                 {
-                    html += fs.readFileSync('./App/views/' + list[i] + '/' + list[i] + '.html');
+                    html += fs.readFileSync('./App/Views/' + list[i] + '/' + list[i] + '.html');
                 }
 
                 layout = layout.replace('@{Views}', html);
