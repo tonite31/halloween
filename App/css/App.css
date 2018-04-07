@@ -45,6 +45,8 @@
     position: fixed;
     left: 0;
     right: 0;
+    height: 40px;
+    background-color: #fdfdfd;
 }
 
 .Header
@@ -87,4 +89,8 @@
     width: 100%;
     top: 0;
     bottom: 0;
+
+    display: none;
+
+    overflow: auto;
 }

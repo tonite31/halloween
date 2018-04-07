@@ -15,8 +15,7 @@
     {
         $('#LoginView #login').on('click', function()
         {
-            $(this).html('<span class="glyphicon glyphicon-repeat rotation"></span>');
-            $('#LoginView .LoginViewFrame').attr('src', '/login/kakao').show();
+            $('#LoginView .LoginViewFrame').attr('src', '/login/provider').show();
         });
     };
 
