@@ -8,7 +8,7 @@ module.exports = function(app)
     {
         if(list[i].endsWith('.js'))
         {
-            console.log(chalk.blue(list[i]));
+            console.log(list[i]);
             require(_path.home + '/src/models/' + list[i]);
         }
     }
@@ -18,7 +18,7 @@ module.exports = function(app)
     {
         if(list[i].endsWith('.js'))
         {
-            console.log(chalk.blue(list[i]));
+            console.log(list[i]);
             require(_path.home + '/src/middlewares/' + list[i])(app);
         }
     }
@@ -28,7 +28,7 @@ module.exports = function(app)
     {
         if(list[i].endsWith('.js'))
         {
-            console.log(chalk.blue(list[i]));
+            console.log(list[i]);
             require(_path.home + '/src/routes/' + list[i])(app);
         }
     }

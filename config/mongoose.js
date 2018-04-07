@@ -11,7 +11,7 @@ module.exports = function(callback)
     db.once('open', function()
     {
         console.log(chalk.green('[Connected to mongod server]'));
-        console.log(chalk.blue(uri));
+        console.log(uri);
         console.log();
         callback();
     });
