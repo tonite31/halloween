@@ -1,23 +1,23 @@
 (function()
 {
-    var LoginView = function()
+    var Login = function()
     {
 
     };
 
-    LoginView.prototype.init = function()
+    Login.prototype.init = function()
     {
-        $('.LoginView').show();
+        $('.Login').show();
         this.bind();
     };
 
-    LoginView.prototype.bind = function()
+    Login.prototype.bind = function()
     {
-        $('#LoginView #login').on('click', function()
+        $('#Login #login').on('click', function()
         {
-            $('#LoginView .LoginViewFrame').attr('src', '/login/provider').show();
+            $('#Login .LoginFrame').attr('src', '/login/provider').show();
         });
     };
 
-    window.LoginView = new LoginView();
+    window.Login = new Login();
 })();

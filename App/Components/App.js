@@ -12,7 +12,7 @@
     {
         this.checkLogin(function()
         {
-            $('#LoginView').remove();
+            $('#Login').remove();
             $('.App').show();
         });
     };
@@ -31,7 +31,7 @@
                 this.init();
             }.bind(this);
 
-            LoginView.init();
+            Login.init();
         }
     };
 
