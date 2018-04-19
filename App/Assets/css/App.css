@@ -16,12 +16,11 @@
     left: 0;
     right: 0;
     height: 40px;
-    background-color: #fdfdfd;
+    background-color: #f7f7f7;
 }
 
 .Header
 {
-    border-bottom: 1px solid #ddd;
     top: 0;
 }
 
@@ -29,12 +28,15 @@
 {
     flex: 1;
     text-align: center;
-    padding: 10px 5px;
+    padding: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .Footer
 {
-    border-top: 1px solid #ddd;
     bottom: 0;
 }
 
@@ -48,8 +50,8 @@
     position: fixed;
     left: 0;
     right: 0;
-    top: 41px;
-    bottom: 41px;
+    top: 40px;
+    bottom: 40px;
 }
 
 .View
@@ -60,7 +62,15 @@
     top: 0;
     bottom: 0;
 
-    display: none;
-
     overflow: auto;
+}
+
+.Header
+{
+    border-bottom: 1px solid #ddd;
+}
+
+.Footer
+{
+    border-top: 1px solid #ddd;
 }

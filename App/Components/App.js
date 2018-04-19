@@ -4,58 +4,83 @@
     {
         window.addEventListener('DOMContentLoaded', function()
         {
+            $('.AppView > div').each(function()
+            {
+                if(window[this.id].init)
+                {
+                    window[this.id].init();
+                }
+            });
+
             this.App.init();
         });
 
         this.user = undefined;
         this.views = {};
+        this.previousView = undefined;
     };
 
     App.prototype.init = function()
     {
         var that = this;
-        $('.AppView > div').each(function()
-        {
-            var targetView = this;
-            if(window[this.id].init)
-            {
-                window[this.id].init(function()
-                {
-                    that.views[targetView.id] = targetView;
-                    targetView.parentElement.removeChild(this);
-                });
-            }
-        });
-
         this.checkLogin(function()
         {
-            $('#Login').remove();
+            var url = that.user.profile.photo;
+            $('.Footer .ProfilePhoto img').attr('src', url);
+
             $('.App').show();
+            $('#Login').remove();
+            that.openView('MessageView');
         });
     };
 
-    App.prototype.openView = function(id)
+    App.prototype.openView = function(id, data)
     {
-        $('.AppView').html('');
-        $('.AppView').append(this.views[id]);
-        window[id].open();
+        if(window[id])
+        {
+            $('.View').hide();
+            $('#' + id).show();
+            window[id].open(data);
+
+            this.previousView = id;
+        }
+    };
+
+    App.prototype.openPreviousView = function()
+    {
+        var id = this.previousView;
+        if(this.previousView && window[this.previousView])
+        {
+            $('.View').hide();
+            $('#' + id).show();
+            window[id].open();
+        }
     };
 
     App.prototype.checkLogin = function(callback)
     {
-        var isLogin = true;
-        if(isLogin)
+        if(this.user)
         {
             callback();
         }
         else
         {
-            window.login = function()
+            var that = this;
+            $.ajax('/api/users/me').done(function(user)
             {
-                this.init();
-            }.bind(this);
-
-            Login.init();
+                that.user = user;
+                callback();
+            }).fail(function(err)
+            {
+                if(err.status == 401)
+                {
+                    Login.open();
+                }
+                else
+                {
+                    console.error(err);
+                }
+            });
         }
     };
 
